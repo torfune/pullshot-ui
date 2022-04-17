@@ -1,7 +1,7 @@
 import type { NextPage } from "next"
 import Head from "next/head"
 
-const Home: NextPage = () => {
+const Map: NextPage = () => {
   return (
     <div>
       <Head>
@@ -11,10 +11,10 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <h1>Foosball Prague</h1>
+        <h1>map page</h1>
       </main>
     </div>
   )
 }
 
-export default Home
+export default Map

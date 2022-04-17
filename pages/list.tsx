@@ -1,7 +1,8 @@
 import type { NextPage } from "next"
 import Head from "next/head"
+import styled from "styled-components"
 
-const Home: NextPage = () => {
+const List: NextPage = () => {
   return (
     <div>
       <Head>
@@ -10,11 +11,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1>Foosball Prague</h1>
-      </main>
+      <Container>
+        <h1>list page</h1>
+      </Container>
     </div>
   )
 }
 
-export default Home
+const Container = styled.main`
+  background: red;
+`
+
+export default List
