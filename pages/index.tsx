@@ -1,7 +1,15 @@
-import type { NextPage } from "next"
-import Head from "next/head"
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import styled from 'styled-components'
+import { PlaceCard } from '../components/PlaceCard'
+import { Place } from '../types/Place'
+import { Strapi } from '../services/Strapi'
+import { BREAKPOINT } from '../constants'
 
-const Home: NextPage = () => {
+type Props = {
+  places: Place[]
+}
+const Index: NextPage<Props> = (props) => {
   return (
     <div>
       <Head>
@@ -10,11 +18,66 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1>Foosball Prague</h1>
-      </main>
+      <Container>
+        <PageTitle>
+          Foosball pubs
+          <br /> in Prague.
+        </PageTitle>
+
+        <ListWrapper>
+          {props.places.map((place) => (
+            <PlaceCard key={place.id} place={place} />
+          ))}
+        </ListWrapper>
+      </Container>
     </div>
   )
 }
 
-export default Home
+const Container = styled.main`
+  margin: 64px 32px;
+
+  ${BREAKPOINT.DESKTOP_ONLY} {
+    margin: 64px 96px;
+  }
+`
+const PageTitle = styled.h1`
+  max-width: 1000px;
+  font-size: 38px;
+  line-height: 1.2;
+
+  ${BREAKPOINT.DESKTOP_ONLY} {
+    font-size: 64px;
+    line-height: 1.5;
+  }
+
+  // -- Gradient
+  background: #fffa65;
+  background: -webkit-linear-gradient(to right, #fffa65 0%, #32ff7e 100%);
+  background: -moz-linear-gradient(to right, #fffa65 0%, #32ff7e 100%);
+  background: linear-gradient(to right, #fffa65 0%, #32ff7e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  // ----
+`
+const ListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  ${BREAKPOINT.DESKTOP_ONLY} {
+    gap: 32px;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+`
+
+export async function getStaticProps() {
+  return {
+    props: {
+      places: await Strapi.getPlaces(),
+    },
+  }
+}
+
+export default Index
